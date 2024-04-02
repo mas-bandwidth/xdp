@@ -159,8 +159,13 @@ int main( int argc, char *argv[] )
     signal( SIGTERM, clean_shutdown_handler );
     signal( SIGHUP,  clean_shutdown_handler );
 
-    // todo: read interface name from command line
-    const char * interface_name = "enp4s0";
+    if ( argc != 2 )
+    {
+        printf( "\nusage: reflector <interface name>\n\n" );
+        return 1;
+    }
+
+    const char * interface_name = argv[1];
 
     if ( bpf_init( &bpf, interface_name ) != 0 )
     {
