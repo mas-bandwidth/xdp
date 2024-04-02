@@ -156,8 +156,9 @@ int main( int argc, char *argv[] )
     signal( SIGHUP,  clean_shutdown_handler );
 
     // todo: read interface name from command line
+    const char * interface_name = "enp4s0";
 
-    if ( bpf_init( &bpf, "enp4s0" ) != 0 )
+    if ( bpf_init( &bpf, interface_name ) != 0 )
     {
         cleanup();
         return 1;
