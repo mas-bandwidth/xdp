@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <stdbool.h>
+#include <assert.h>
 #include <unistd.h>
 #include <ifaddrs.h>
 #include <net/if.h>
