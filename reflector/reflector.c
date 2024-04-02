@@ -168,7 +168,7 @@ int main( int argc, char *argv[] )
         return 1;
     }
 
-    while ( true )
+    while ( !quit )
     {
         usleep( 1000000 );
     }
