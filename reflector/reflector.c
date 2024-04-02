@@ -128,6 +128,8 @@ void bpf_shutdown( struct bpf_t * bpf )
     }
 }
 
+static bpf_t bpf;
+
 volatile bool quit;
 
 void interrupt_handler( int signal )
