@@ -104,10 +104,10 @@ SEC("reflector_xdp") int reflect_xdp_filter( struct xdp_md *ctx )
                         {
                             // what
                             int total_bytes = (int) ( data_end - data );
-                            debug_printf( "total packet size is %d bytes", total_bytes );
+                            
                             void * payload = udp + sizeof(struct udphdr);
                             int payload_bytes = data_end - payload;
-                            debug_printf( "reflecting %d byte udp packet from %pI4:%d", payload_bytes, ip->saddr, bpf_ntohs(udp->source) );
+                            debug_printf( "reflecting %d byte udp packet from %pI4:%d, total size is %d bytes", payload_bytes, ip->saddr, bpf_ntohs(udp->source), total_bytes );
                             reflect_packet( data, payload_bytes );
                             return XDP_TX;
                         }
