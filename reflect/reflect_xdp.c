@@ -1,11 +1,11 @@
 /*
     UDP reflect XDP program
 
-    Reflects UDP packets sent to port 40000 back to sender.
+    Reflects IPv4 UDP packets sent to port 40000 back to sender.
 
     USAGE:
 
-        clang -Ilibbpf/src -g -O2 -target bpf -c reflector_xdp.c -o reflector_xdp.o
+        clang -Ilibbpf/src -g -O2 -target bpf -c reflect_xdp.c -o reflect_xdp.o
         sudo cat /sys/kernel/debug/tracing/trace_pipe
 */
 
@@ -78,7 +78,7 @@ static void reflect_packet( void * data, int payload_bytes )
     ip->check = checksum;
 }
 
-SEC("reflector_xdp") int reflect_xdp_filter( struct xdp_md *ctx ) 
+SEC("reflect_xdp") int reflect_xdp_filter( struct xdp_md *ctx ) 
 { 
     void * data = (void*) (long) ctx->data; 
 

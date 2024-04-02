@@ -1,5 +1,5 @@
 /*
-    UDP reflector XDP program (Userspace)
+    UDP reflect XDP program (Userspace)
 
     Runs on Ubuntu 22.04 LTS 64bit with Linux Kernel 6.5+ *ONLY*
 */
@@ -74,20 +74,20 @@ int bpf_init( struct bpf_t * bpf, const char * interface_name )
         }
     }
 
-    // load the reflector_xdp program and attach it to the network interface
+    // load the reflect_xdp program and attach it to the network interface
 
-    printf( "loading reflector_xdp...\n" );
+    printf( "loading reflect_xdp...\n" );
 
-    bpf->program = xdp_program__open_file( "reflector_xdp.o", "reflector_xdp", NULL );
+    bpf->program = xdp_program__open_file( "reflect_xdp.o", "reflect_xdp", NULL );
     if ( libxdp_get_error( bpf->program ) ) 
     {
-        printf( "\nerror: could not load reflector_xdp program\n\n");
+        printf( "\nerror: could not load reflect_xdp program\n\n");
         return 1;
     }
 
-    printf( "reflector_xdp loaded successfully.\n" );
+    printf( "reflect_xdp loaded successfully.\n" );
 
-    printf( "attaching reflector_xdp to network interface\n" );
+    printf( "attaching reflect_xdp to network interface\n" );
 
     int ret = xdp_program__attach( bpf->program, bpf->interface_index, XDP_MODE_NATIVE, 0 );
     if ( ret == 0 )
@@ -104,7 +104,7 @@ int bpf_init( struct bpf_t * bpf, const char * interface_name )
         }
         else
         {
-            printf( "\nerror: failed to attach reflector_xdp program to interface\n\n" );
+            printf( "\nerror: failed to attach reflect_xdp program to interface\n\n" );
             return 1;
         }
     }
@@ -153,7 +153,7 @@ static void cleanup()
 
 int main( int argc, char *argv[] )
 {
-    printf( "\n[reflector]\n" );
+    printf( "\n[reflect]\n" );
 
     signal( SIGINT,  interrupt_handler );
     signal( SIGTERM, clean_shutdown_handler );
@@ -161,7 +161,7 @@ int main( int argc, char *argv[] )
 
     if ( argc != 2 )
     {
-        printf( "\nusage: reflector <interface name>\n\n" );
+        printf( "\nusage: reflect <interface name>\n\n" );
         return 1;
     }
 
