@@ -32,6 +32,8 @@
 # error "Endianness detection needs to be set up for your compiler?!"
 #endif
 
+#define DEBUG 1
+
 #if DEBUG
 #define debug_printf bpf_printk
 #else // #if DEBUG
