@@ -27,7 +27,8 @@ void clean_shutdown_handler( int signal )
 
 static void cleanup()
 {
-    bpf_shutdown( &bpf );
+    // todo
+    // bpf_shutdown( &bpf );
     fflush( stdout );
 }
 
