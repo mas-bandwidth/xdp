@@ -7,7 +7,7 @@
 #include <memory.h>
 #include <stdio.h>
 #include <signal.h>
-#include <bool.h>
+#include <stdbool.h>
 
 // todo: move bpf stuff into here
 //static struct bpf_t bpf;
