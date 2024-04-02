@@ -9,7 +9,7 @@
 #include <signal.h>
 #include <stdbool.h>
 #include <unistd.h>
-
+#include <ifaddrs.h>
 #include <bpf/bpf.h>
 #include <bpf/libbpf.h>
 #include <xdp/libxdp.h>
