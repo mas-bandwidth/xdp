@@ -153,7 +153,7 @@ static void cleanup()
 
 int main( int argc, char *argv[] )
 {
-    printf( "[reflector]\n" );
+    printf( "\n[reflector]\n" );
 
     signal( SIGINT,  interrupt_handler );
     signal( SIGTERM, clean_shutdown_handler );
