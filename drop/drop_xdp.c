@@ -63,11 +63,9 @@ SEC("drop_xdp") int drop_xdp_filter( struct xdp_md *ctx )
                     {
                         if ( udp->dest == __constant_htons(40000) )
                         {
-                            void * payload = (void*) udp + sizeof(struct udphdr);
-
-                            int payload_bytes = data_end - payload;
-
                             // Drop packets that are too small to be valid
+
+                            void * packet_data = (void*) udp + sizeof(struct udphdr);
 
                             if ( (void*)packet_data + 16 > data_end )
                             {
