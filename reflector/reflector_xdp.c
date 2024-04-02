@@ -117,4 +117,4 @@ SEC("reflector_xdp") int reflect_xdp_filter( struct xdp_md *ctx )
     return XDP_PASS;
 }
 
-char _license[] SEC("license") = "BSD 3 Clause";
+char _license[] SEC("license") = "GPL";
