@@ -180,5 +180,7 @@ int main( int argc, char *argv[] )
 
     cleanup();
 
+    printf( "\n" );
+
     return 0;
 }
