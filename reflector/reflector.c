@@ -54,5 +54,5 @@ int main( int argc, char *argv[] )
 
     cleanup();
 
-    return result;
+    return 0;
 }
