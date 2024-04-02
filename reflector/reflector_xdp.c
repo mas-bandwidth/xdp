@@ -78,7 +78,7 @@ static void reflect_packet( void * data, int payload_bytes )
     ip->check = checksum;
 }
 
-SEC("reflect_xdp") int reflect_xdp_filter( struct xdp_md *ctx ) 
+SEC("reflector_xdp") int reflect_xdp_filter( struct xdp_md *ctx ) 
 { 
     void * data = (void*) (long) ctx->data; 
 
