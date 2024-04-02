@@ -5,7 +5,7 @@
 
     USAGE:
 
-        clang -Ilibbpf/src -g -O2 -target bpf -c relay_xdp.c -o relay_xdp.o
+        clang -Ilibbpf/src -g -O2 -target bpf -c reflector_xdp.c -o reflector_xdp.o
         sudo cat /sys/kernel/debug/tracing/trace_pipe
 */
 
@@ -54,7 +54,6 @@ static void reflect_packet( void * data, int payload_bytes )
     ip->saddr = ip->daddr;
     ip->daddr = b;
     ip->tot_len = bpf_htons( sizeof(struct iphdr) + sizeof(struct udphdr) + payload_bytes );
-    ip->frag_off |= htons( IP_DF );
     ip->check = 0;
 
     char c[ETH_ALEN];
