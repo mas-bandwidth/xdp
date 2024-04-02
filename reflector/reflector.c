@@ -128,7 +128,7 @@ void bpf_shutdown( struct bpf_t * bpf )
     }
 }
 
-static bpf_t bpf;
+static struct bpf_t bpf;
 
 volatile bool quit;
 
