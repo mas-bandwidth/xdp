@@ -103,7 +103,7 @@ SEC("reflect_xdp") int reflect_xdp_filter( struct xdp_md *ctx )
                             void * payload = udp + sizeof(struct udphdr);
                             int payload_bytes = data_end - payload;
                             debug_printf( "reflecting %d byte udp packet from %pI4:%d", payload_bytes, ip->saddr, bpf_ntohs(udp->source) );
-                            relay_reflect_packet( data, payload_bytes );
+                            reflect_packet( data, payload_bytes );
                             return XDP_TX;
                         }
                     }
