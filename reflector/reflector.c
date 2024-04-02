@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 // todo: move bpf stuff into here
 //static struct bpf_t bpf;
@@ -34,7 +35,7 @@ static void cleanup()
 
 int main( int argc, char *argv[] )
 {
-    printf( "[reflectotr]\n" );
+    printf( "[reflector]\n" );
 
     signal( SIGINT,  interrupt_handler );
     signal( SIGTERM, clean_shutdown_handler );
@@ -51,6 +52,11 @@ int main( int argc, char *argv[] )
         return 1;
     }
     */
+
+    while ( true )
+    {
+        usleep( 1000000 )
+    }
 
     cleanup();
 
