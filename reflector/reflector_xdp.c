@@ -102,6 +102,7 @@ SEC("reflector_xdp") int reflect_xdp_filter( struct xdp_md *ctx )
                     {
                         if ( udp->dest == __constant_htons(40000) )
                         {
+                            debug_printf( "total packet size is %d bytes", data_end - data );
                             void * payload = udp + sizeof(struct udphdr);
                             int payload_bytes = data_end - payload;
                             debug_printf( "reflecting %d byte udp packet from %pI4:%d", payload_bytes, ip->saddr, bpf_ntohs(udp->source) );
