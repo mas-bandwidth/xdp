@@ -46,7 +46,7 @@ static const struct btf_kfunc_id_set bpf_task_kfunc_set = {
 
 // ----------------------------------------------------------------------------------------------------------------------
 
-static int __init crypto_init( void ) 
+static int __init crypto_module_init( void ) 
 {
     pr_info( "crypto module initializing...\n" );
 
@@ -69,7 +69,7 @@ static int __init crypto_init( void )
     return result;
 }
 
-static void __exit crypto_exit( void ) 
+static void __exit crypto_module_exit( void ) 
 {
     pr_info( "crypto module shutting down...\n" );
 
@@ -81,5 +81,5 @@ static void __exit crypto_exit( void )
     pr_info( "crypto module shut down successfully\n" );
 }
 
-module_init( crypto_init );
-module_exit( crypto_exit );
+module_init( crypto_module_init );
+module_exit( crypto_module_exit );
