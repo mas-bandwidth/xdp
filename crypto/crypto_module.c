@@ -22,19 +22,16 @@ MODULE_LICENSE( "GPL" );
 MODULE_AUTHOR( "Glenn Fiedler" ); 
 MODULE_DESCRIPTION( "Crypto kernel module" );
 
+__bpf_kfunc int bpf_crypto_sha256( void * data, int data__sz, void * output, int output__sz );
+
 struct crypto_shash * sha256;
 
-static int sha256_hash( const __u8 * data, __u32 data_len, __u8 * out_digest )
+__bpf_kfunc int bpf_crypto_sha256( void * data, int data__sz, void * output, int output__sz )
 {
+    (void) output__sz;
     SHASH_DESC_ON_STACK( shash, tfm );
     shash->tfm = sha256;
-    crypto_shash_digest( shash, data, data_len, out_digest );
-    return 0;
-}
-
-__bpf_kfunc int bpf_relay_sha256( void * data, int data__sz, void * output, int output__sz )
-{
-    sha256_hash( data, data__sz, output );
+    crypto_shash_digest( shash, data, data__sz, output );
     return 0;
 }
 
