@@ -22,6 +22,7 @@ struct bpf_t
     struct xdp_program * program;
     bool attached_native;
     bool attached_skb;
+    int whitelist_fd;
 };
 
 int bpf_init( struct bpf_t * bpf, const char * interface_name )
@@ -108,6 +109,15 @@ int bpf_init( struct bpf_t * bpf, const char * interface_name )
             return 1;
         }
     }
+
+    bpf->whitelist_fd = bpf_obj_get( "/sys/fs/bpf/whitelist_map" );
+    if ( bpf->whitelist_fd <= 0 )
+    {
+        printf( "\nerror: could not get whitelist map: %s\n\n", strerror(errno) );
+        return 1;
+    }
+
+    // todo: stash some whitelist entries in the map
 
     return 0;
 }
