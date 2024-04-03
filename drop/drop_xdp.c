@@ -95,7 +95,7 @@ SEC("drop_xdp") int drop_xdp_filter( struct xdp_md *ctx )
 
                             if ( packet_data[1] < 0x2A || packet_data[1] > 0x2D                                                           ||
                                  packet_data[2] < 0xC8 || packet_data[2] > 0xE7                                                           ||
-                                 packet_data[3] < 0x05 || packet_data[4] > 0x44                                                           ||
+                                 packet_data[3] < 0x05 || packet_data[3] > 0x44                                                           ||
                                  packet_data[5] < 0x4E || packet_data[5] > 0x51                                                           ||
                                  packet_data[6] < 0x60 || packet_data[6] > 0xDF                                                           ||
                                  packet_data[7] < 0x64 || packet_data[7] > 0xE3                                                           ||
