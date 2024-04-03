@@ -14,9 +14,7 @@ struct whitelist_key {
 };
 
 struct whitelist_value {
-    __u64 expire_timestamp;
-    __u8 source_address[6];
-    __u8 dest_address[6];
+    int dummy;
 };
 
 #endif // #ifndef SHARED_H

@@ -118,7 +118,20 @@ int bpf_init( struct bpf_t * bpf, const char * interface_name )
         return 1;
     }
 
-    // todo: stash some whitelist entries in the map
+    // add some whitelist entries in the map
+
+    struct whitelist_key key;
+    key.address = 0xc0a80114; // 192.168.1.20
+    key.port = htons(30000);
+
+    struct whitelist_value value;
+    memset( &value, 0, sizeof(value) );
+
+    if ( bpf_map_update_elem( bpf->whitelist_fd, &key, &value, BPF_ANY ) != 0 )
+    {
+        printf( "error: failed to add entry to whitelist map\n" );
+        return 1;
+    }
 
     return 0;
 }
