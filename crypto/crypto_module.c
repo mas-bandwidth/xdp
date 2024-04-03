@@ -16,11 +16,6 @@
 #include <linux/bpf.h>
 #include <linux/btf.h>
 #include <crypto/hash.h>
-#include <crypto/kpp.h>
-#include <crypto/poly1305.h>
-#include <crypto/chacha.h>
-#include <crypto/algapi.h>
-#include <linux/scatterlist.h>
 
 MODULE_VERSION( "1.0.0" );
 MODULE_LICENSE( "GPL" ); 
@@ -33,6 +28,7 @@ struct crypto_shash * sha256;
 
 __bpf_kfunc int bpf_crypto_sha256( void * data, int data__sz, void * output, int output__sz )
 {
+    (void) output__sz;
     SHASH_DESC_ON_STACK( shash, tfm );
     shash->tfm = sha256;
     crypto_shash_digest( shash, data, data__sz, output );
