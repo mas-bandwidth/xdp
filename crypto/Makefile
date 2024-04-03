@@ -17,8 +17,5 @@ obj-m += crypto_module.o
 
 module: crypto_module.c
 	@echo building crypto module
-	sudo rmmod crypto_module.ko; echo
 	make -C /lib/modules/$(KERNEL)/build M=$(PWD) modules
-	sudo modprobe chacha20
-	sudo modprobe poly1305
-	sudo insmod crypto_module.ko; echo
+	sudo insmod crypto_module.ko
