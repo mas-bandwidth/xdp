@@ -15,6 +15,7 @@
 #include <bpf/bpf.h>
 #include <bpf/libbpf.h>
 #include <xdp/libxdp.h>
+#include <arpa/inet.h>
 #include <errno.h>
 
 #include "shared.h"
