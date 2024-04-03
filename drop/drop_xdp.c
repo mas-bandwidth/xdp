@@ -93,19 +93,20 @@ SEC("drop_xdp") int drop_xdp_filter( struct xdp_md *ctx )
 
                             // Basic packet filter
 
-                            if ( packet_data[2] != ( 1 | ( ( 255 - packet_data[1] ) ^ 113 ) )                                               ||
-                                 packet_data[3] < 0x2A || packet_data[3] > 0x2D                                                             ||
-                                 packet_data[4] < 0xC8 || packet_data[4] > 0xE7                                                             ||
-                                 packet_data[5] < 0x05 || packet_data[5] > 0x44                                                             ||
-                                 packet_data[7] < 0x4E || packet_data[7] > 0x51                                                             ||
-                                 packet_data[8] < 0x60 || packet_data[8] > 0xDF                                                             ||
-                                 packet_data[9] < 0x64 || packet_data[9] > 0xE3                                                             ||
-                                 packet_data[10] != 0x07 && packet_data[10] != 0x4F                                                         ||
-                                 packet_data[11] != 0x25 && packet_data[11] != 0x53                                                         ||
-                                 packet_data[12] < 0x7C || packet_data[12] > 0x83                                                           ||
-                                 packet_data[13] < 0xAF || packet_data[13] > 0xB6                                                           ||
-                                 packet_data[14] < 0x21 || packet_data[14] > 0x60                                                           ||
-                                 packet_data[15] != 0x61 && packet_data[15] != 0x05 && packet_data[15] != 0x2B && packet_data[15] != 0x0D )
+                            if ( packet_data[1] < 0x2A || packet_data[1] > 0x2D                                                           ||
+                                 packet_data[2] < 0xC8 || packet_data[2] > 0xE7                                                           ||
+                                 packet_data[3] < 0x05 || packet_data[4] > 0x44                                                           ||
+                                 packet_data[5] < 0x4E || packet_data[5] > 0x51                                                           ||
+                                 packet_data[6] < 0x60 || packet_data[6] > 0xDF                                                           ||
+                                 packet_data[7] < 0x64 || packet_data[7] > 0xE3                                                           ||
+                                 packet_data[8] != 0x07 && packet_data[8] != 0x4F                                                         ||
+                                 packet_data[9] != 0x25 && packet_data[9] != 0x53                                                         ||
+                                 packet_data[10] < 0x7C || packet_data[10] > 0x83                                                         ||
+                                 packet_data[11] < 0xAF || packet_data[11] > 0xB6                                                         ||
+                                 packet_data[12] < 0x21 || packet_data[12] > 0x60                                                         ||
+                                 packet_data[13] != 0x61 && packet_data[13] != 0x05 && packet_data[15] != 0x2B && packet_data[15] != 0x0D ||
+                                 packet_data[14] < 0xD2 || packet_data[14] > 0xF1                                                         ||
+                                 packet_data[15] < 0x11 || packet_data[15] > 0x90 )
                             {
                                 debug_printf( "packet filter dropped packet" );
                                 return XDP_DROP;
