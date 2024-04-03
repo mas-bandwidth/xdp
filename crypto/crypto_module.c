@@ -24,7 +24,7 @@ MODULE_DESCRIPTION( "Crypto kernel module" );
 
 __bpf_kfunc int bpf_crypto_sha256( void * data, int data__sz, void * output, int output__sz );
 
-struct crypto_shash * sha256;
+static struct crypto_shash * sha256;
 
 __bpf_kfunc int bpf_crypto_sha256( void * data, int data__sz, void * output, int output__sz )
 {
@@ -48,7 +48,7 @@ static const struct btf_kfunc_id_set bpf_task_kfunc_set = {
 
 static int __init crypto_init( void ) 
 {
-    pr_info( "Crypto module initializing...\n" );
+    pr_info( "crypto module initializing...\n" );
 
     sha256 = crypto_alloc_shash( "sha256", 0, 0 );
     if ( IS_ERR( sha256 ) )
