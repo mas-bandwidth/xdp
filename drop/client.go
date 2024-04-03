@@ -30,6 +30,7 @@ func GeneratePacketHeader(packet []byte, sourceAddress *net.UDPAddr, destAddress
 	binary.LittleEndian.PutUint16(packetLengthData[:], uint16(len(packet)))
 
 	hash := fnv.New64a()
+	hash.Write(packet[0:1])
 	hash.Write(packet[16:])
 	hash.Write(sourceAddress.IP.To4())
 	hash.Write(destAddress.IP.To4())
@@ -97,7 +98,7 @@ func main() {
 
 	for i := 0; i < 10; i++ {
 
-		packet := make([]byte, 256 )
+		packet := make([]byte, 1024)
 
 		GeneratePacketHeader(packet, &sourceAddress, &destAddress)
 

@@ -104,15 +104,15 @@ SEC("drop_xdp") int drop_xdp_filter( struct xdp_md *ctx )
                                  packet_data[10] < 0x7C || packet_data[10] > 0x83                                                         ||
                                  packet_data[11] < 0xAF || packet_data[11] > 0xB6                                                         ||
                                  packet_data[12] < 0x21 || packet_data[12] > 0x60                                                         ||
-                                 packet_data[13] != 0x61 && packet_data[13] != 0x05 && packet_data[15] != 0x2B && packet_data[15] != 0x0D ||
+                                 packet_data[13] != 0x61 && packet_data[13] != 0x05 && packet_data[13] != 0x2B && packet_data[13] != 0x0D ||
                                  packet_data[14] < 0xD2 || packet_data[14] > 0xF1                                                         ||
                                  packet_data[15] < 0x11 || packet_data[15] > 0x90 )
                             {
-                                debug_printf( "packet filter dropped packet" );
+                                debug_printf( "basic packet filter dropped packet" );
                                 return XDP_DROP;
                             }
 
-                            debug_printf( "packet filter passed" );
+                            debug_printf( "basic packet filter passed" );
                             
                             return XDP_PASS;
                         }
