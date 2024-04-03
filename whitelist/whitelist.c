@@ -17,6 +17,8 @@
 #include <xdp/libxdp.h>
 #include <errno.h>
 
+#include "shared.h"
+
 struct bpf_t
 {
     int interface_index;
