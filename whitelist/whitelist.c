@@ -124,7 +124,7 @@ int bpf_init( struct bpf_t * bpf, const char * interface_name )
     // add some whitelist entries in the map
 
     struct whitelist_key key;
-    key.address = 0xc0a80114; // 192.168.1.20
+    key.address = 0x1401a8c0; // 192.168.1.20 (big endian)
     key.port = htons(30000);
 
     struct whitelist_value value;
