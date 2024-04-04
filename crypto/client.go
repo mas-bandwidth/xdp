@@ -25,7 +25,7 @@ func ParseAddress(input string) net.UDPAddr {
 func main() {
 
 	// todo: read address from command line
-	address := ParseAddress("192.168.1.40:40000")
+	address := ParseAddress("10.128.0.15:40000")
 	if address.Port == 0 {
 		address.Port = 40000
 	}
@@ -42,6 +42,8 @@ func main() {
 	for i := 0; i < 10; i++ {
 
 		packet := make([]byte, 256 )
+
+		rand.Read(packet)
 
 		fmt.Printf("sent %d byte packet to %s\n", len(packet), address.String())
 
