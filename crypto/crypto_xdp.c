@@ -106,13 +106,13 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                         {
                             void * payload = (void*) udp + sizeof(struct udphdr);
         
-                            if ( payload + 256 == data_end && payload + 256 <= data_end ) // IMPORTANT: for verifier
+                            if ( payload + 256 <= data_end ) // IMPORTANT: for verifier
                             {   
                                 debug_printf( "calculating sha256 of packet" );
 
                                 __u8 hash[32];
                                 memset( hash, 0, sizeof(hash) );
-                                bpf_crypto_sha256( payload, 256, hash, 32 );
+                                bpf_crypto_sha256( payload, 32, hash, 32 );
                                     
                                 /*
                                 response_packet( data, 256 );
