@@ -2,6 +2,7 @@
 package main
 
 import (
+	"os"
 	"net"
 	"time"
 	"fmt"
@@ -24,8 +25,12 @@ func ParseAddress(input string) net.UDPAddr {
 
 func main() {
 
-	// todo: read address from command line
-	address := ParseAddress("192.168.1.40:40000")
+	if len(os.Args) != 2 {
+		fmt.Printf("\nUsage: go run client.go <address>\n\n")
+		os.Exit(0)
+	}
+
+	address := ParseAddress(os.Args[1])
 	if address.Port == 0 {
 		address.Port = 40000
 	}

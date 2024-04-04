@@ -2,6 +2,7 @@
 package main
 
 import (
+	"os"
 	"net"
 	"time"
 	"fmt"
@@ -80,9 +81,17 @@ func GeneratePacketHeader(packet []byte, sourceAddress *net.UDPAddr, destAddress
 
 func main() {
 
-	// todo: command line
-	sourceAddress := ParseAddress("192.168.1.20:30000")
-	destAddress := ParseAddress("192.168.1.40:40000")
+	if len(os.Args) != 3 {
+		fmt.Printf("\nUsage: go run client.go <source> <dest>\n\n")
+		os.Exit(0)
+	}
+
+	sourceAddress := ParseAddress(os.Args[1])
+	if sourceAddress.Port == 0 {
+		sourceAddress.Port = 30000
+	}
+
+	destAddress := ParseAddress(os.Args[2])
 	if destAddress.Port == 0 {
 		destAddress.Port = 40000
 	}
