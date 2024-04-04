@@ -121,6 +121,7 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                                     memcpy( payload, hash, 32 );
                                     bpf_xdp_adjust_tail( ctx, -( payload_bytes - 32 ) );
                                 }
+                                /*
                                 else
                                 {
                                     bpf_xdp_adjust_tail( ctx, 32 - payload_bytes );
@@ -132,6 +133,7 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                                         memcpy( payload, hash, 32 );
                                     }
                                 }
+                                */
 
                                 return XDP_TX;
                             }
