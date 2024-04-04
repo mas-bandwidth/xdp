@@ -104,6 +104,8 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                     {
                         if ( udp->dest == __constant_htons(40000) )
                         {
+                            debug_printf( "received udp packet on port 40000" );
+
                             void * payload = (void*) udp + sizeof(struct udphdr);
         
                             if ( payload + 256 <= data_end ) // IMPORTANT: for verifier
