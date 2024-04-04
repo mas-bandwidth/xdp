@@ -112,6 +112,12 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
 
                             int max_payload = 1384;
 
+                            if ( payload_bytes <= 0 )
+                            {
+                                debug_printf( "i love the verifier" );
+                                return XDP_DROP;
+                            }
+
                             if ( payload_bytes > max_payload )
                             {
                                 debug_printf( "payload is too large" );
