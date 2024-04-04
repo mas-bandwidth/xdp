@@ -114,19 +114,18 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                                 memset( hash, 0, sizeof(hash) );
                                 bpf_crypto_sha256( payload, 256, hash, 32 );
                                     
-                                /*
-                                response_packet( data, 256 );
+                                response_packet( data, 32 );
 
                                 memcpy( payload, hash, 32 );
 
-                                bpf_xdp_adjust_tail( ctx, -224 );
-                                */
-
+                                // todo
+                                // bpf_xdp_adjust_tail( ctx, -224 );
+                              
                                 return XDP_TX;
                             }
                             else
                             {
-                                debug_printf( "packet is not 256 bytes" );
+                                debug_printf( "packet is smaller than 256 bytes" );
 
                                 return XDP_DROP;
                             }
