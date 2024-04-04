@@ -110,8 +110,8 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                             {   
                                 debug_printf( "calculating sha256 of packet" );
 
-                                __u8 buffer[256];
-                                __u8 hash[256];
+                                __u8 buffer[64];
+                                __u8 hash[64];
                                 bpf_crypto_sha256( buffer, 32, hash, 32 );
                                     
                                 /*
