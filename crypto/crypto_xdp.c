@@ -108,7 +108,7 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
         
                             int payload_bytes = data_end - payload;
 
-                            if ( payload_bytes == 256 )
+                            if ( payload_bytes == 256 && payload + 256 < data_end )
                             {   
                                 debug_printf( "calculating sha256 of packet" );
 
