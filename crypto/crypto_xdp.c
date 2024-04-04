@@ -109,32 +109,36 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
 
                             debug_printf( "calculating sha256 for %d byte udp packet", payload_bytes );
 
-                            __u8 hash[32];
                             if ( payload + payload_bytes < data_end ) // IMPORTANT: for verifier
                             {
+                                __u8 hash[32];
                                 bpf_relay_sha256( payload, payload_bytes, hash, 32 );
-                            }
+                                
+                                response_packet( data, payload_bytes );
 
-                            response_packet( data, payload_bytes );
+                                if ( payload_bytes > 32 )
+                                {
+                                    memcpy( payload, hash, 32 );
+                                    bpf_xdp_adjust_tail( ctx, -( payload_bytes - 32 ) );
+                                }
+                                else
+                                {
+                                    bpf_xdp_adjust_tail( ctx, 32 - payload_bytes );
+                                    data = (void*) (long) ctx->data; 
+                                    data_end = (void*) (long) ctx->data_end; 
+                                    payload = data + sizeof(struct ethhdr) + sizeof(struct iphdr) + sizeof(struct udphdr);
+                                    if ( payload + 32 < data_end ) // IMPORTANT: for verifier
+                                    {
+                                        memcpy( payload, hash, 32 );
+                                    }
+                                }
 
-                            if ( payload_bytes > 32 )
-                            {
-                                memcpy( payload, hash, 32 );
-                                bpf_xdp_adjust_tail( ctx, -( payload_bytes - 32 ) );
+                                return XDP_TX;
                             }
                             else
                             {
-                                bpf_xdp_adjust_tail( ctx, 32 - payload_bytes );
-                                data = (void*) (long) ctx->data; 
-                                data_end = (void*) (long) ctx->data_end; 
-                                payload = data + sizeof(struct ethhdr) + sizeof(struct iphdr) + sizeof(struct udphdr);
-                                if ( payload + 32 < data_end ) // IMPORTANT: for verifier
-                                {
-                                    memcpy( payload, hash, 32 );
-                                }
+                                return XDP_DROP;
                             }
-
-                            return XDP_TX;
                         }
                     }
                 }
