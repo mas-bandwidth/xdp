@@ -112,7 +112,7 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
 
                                 __u8 hash[32];
                                 memset( hash, 0, sizeof(hash) );
-                                bpf_crypto_sha256( payload, 32, hash, 32 );
+                                bpf_crypto_sha256( payload, 256, hash, 32 );
                                     
                                 /*
                                 response_packet( data, 256 );
