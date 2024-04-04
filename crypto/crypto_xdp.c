@@ -111,13 +111,15 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                                 debug_printf( "calculating sha256 of packet" );
 
                                 __u8 hash[32];
-                                bpf_relay_sha256( payload, 200, hash, 32 );
+                                bpf_relay_sha256( payload, 256, hash, 32 );
                                     
+                                /*
                                 response_packet( data, 256 );
 
                                 memcpy( payload, hash, 32 );
 
                                 bpf_xdp_adjust_tail( ctx, -224 );
+                                */
 
                                 return XDP_TX;
                             }
