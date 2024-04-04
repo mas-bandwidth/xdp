@@ -105,23 +105,24 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                         if ( udp->dest == __constant_htons(40000) )
                         {
                             void * payload = (void*) udp + sizeof(struct udphdr);
+        
                             int payload_bytes = data_end - payload;
 
                             debug_printf( "calculating sha256 for %d byte udp packet", payload_bytes );
 
-                            if ( payload + payload_bytes < data_end ) // IMPORTANT: for verifier
+                            if ( payload + payload_bytes <= data_end ) // IMPORTANT: for verifier
                             {
                                 __u8 hash[32];
                                 bpf_relay_sha256( payload, payload_bytes, hash, 32 );
                                 
                                 response_packet( data, payload_bytes );
 
+                                /*
                                 if ( payload_bytes > 32 )
                                 {
                                     memcpy( payload, hash, 32 );
                                     bpf_xdp_adjust_tail( ctx, -( payload_bytes - 32 ) );
                                 }
-                                /*
                                 else
                                 {
                                     bpf_xdp_adjust_tail( ctx, 32 - payload_bytes );
