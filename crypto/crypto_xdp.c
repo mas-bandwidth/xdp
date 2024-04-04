@@ -109,7 +109,9 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                             int payload_bytes = data_end - payload;
 
                             if ( payload_bytes == 256 )
-                            {
+                            {   
+                                debug_printf( "calculating sha256 of packet" );
+
                                 __u8 hash[32];
                                 bpf_relay_sha256( payload, 256, hash, 32 );
                                     
@@ -123,6 +125,8 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                             }
                             else
                             {
+                                debug_printf( "packet is not 256 bytes" );
+
                                 return XDP_DROP;
                             }
                         }
