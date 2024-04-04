@@ -104,33 +104,17 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                     {
                         if ( udp->dest == __constant_htons(40000) )
                         {
-                            debug_printf( "received udp packet on port 40000" );
+                            debug_printf( "received udp packet" );
 
                             void * payload = (void*) udp + sizeof(struct udphdr);
-
-                            int payload_bytes = data_end - payload;
-
-                            int max_payload = 1384;
-
-                            if ( payload_bytes <= 0 )
-                            {
-                                debug_printf( "i love the verifier" );
-                                return XDP_DROP;
-                            }
-
-                            if ( payload_bytes > max_payload )
-                            {
-                                debug_printf( "payload is too large" );
-                                return XDP_DROP;
-                            }
-
-                            if ( payload + payload_bytes <= data_end ) // IMPORTANT: for verifier
+        
+                            if ( payload + 256 <= data_end ) // IMPORTANT: for verifier
                             {   
-                                debug_printf( "calculating sha256" );
+                                debug_printf( "calculating sha256 of packet" );
 
                                 __u8 hash[32];
                                 memset( hash, 0, sizeof(hash) );
-                                bpf_crypto_sha256( payload, payload_bytes, hash, 32 );
+                                bpf_crypto_sha256( payload, 256, hash, 32 );
                                     
                                 response_packet( data, 32 );
 
