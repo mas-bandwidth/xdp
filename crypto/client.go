@@ -26,7 +26,7 @@ func ParseAddress(input string) net.UDPAddr {
 func main() {
 
 	// todo: read address from command line
-	address := ParseAddress("127.0.0.1:40000")
+	address := ParseAddress("10.128.0.15:40000")
 	if address.Port == 0 {
 		address.Port = 40000
 	}
