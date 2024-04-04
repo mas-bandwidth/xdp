@@ -124,7 +124,7 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                                 bpf_xdp_adjust_tail( ctx, 32 - payload_bytes );
                                 data = (void*) (long) ctx->data; 
                                 data_end = (void*) (long) ctx->data_end; 
-                                payload = data + sizeof(struct ethdr) + sizeof(iphdr) + sizeof(udphdr);
+                                payload = data + sizeof(struct ethdr) + sizeof(struct iphdr) + sizeof(struct udphdr);
                                 if ( payload + 32 < data_end ) // IMPORTANT: for validator post resize up
                                 {
                                     memcpy( payload, hash, 32 );
