@@ -40,7 +40,7 @@
 #define debug_printf(...) do { } while (0)
 #endif // #if DEBUG
 
-int bpf_crypto_sha256( void * data, int data__sz, void * output, int output__sz ) __ksym;
+extern int bpf_crypto_sha256( void * data, int data__sz, void * output, int output__sz ) __ksym;
 
 static void response_packet( void * data, int payload_bytes )
 {
