@@ -40,6 +40,8 @@
 #define debug_printf(...) do { } while (0)
 #endif // #if DEBUG
 
+int bpf_relay_sha256( void * data, int data__sz, void * output, int output__sz ) __ksym;
+
 static void response_packet( void * data, int payload_bytes )
 {
     struct ethhdr * eth = data;
@@ -102,13 +104,33 @@ SEC("crypto_xdp") int crypto_xdp_filter( struct xdp_md *ctx )
                     {
                         if ( udp->dest == __constant_htons(40000) )
                         {
-                            // todo: if too small, just drop
-
                             void * payload = (void*) udp + sizeof(struct udphdr);
                             int payload_bytes = data_end - payload;
+
                             debug_printf( "calculating sha256 for %d byte udp packet", payload_bytes );
-                            // todo: sha256 and return it
+
+                            __u8 hash[32];
+                            bpf_relay_sha256( &payload, payload_bytes, hash, 32 );
+
                             response_packet( data, payload_bytes );
+
+                            if ( payload_bytes > 32 )
+                            {
+                                memcpy( payload, hash, 32 );
+                                bpf_xdp_adjust_tail( ctx, -( payload_bytes - 32 ) );
+                            }
+                            else
+                            {
+                                bpf_xdp_adjust_tail( ctx, 32 - payload_bytes );
+                                data = (void*) (long) ctx->data; 
+                                data_end = (void*) (long) ctx->data_end; 
+                                payload = data + sizeof(struct ethdr) + sizeof(iphdr) + sizeof(udphdr);
+                                if ( payload + 32 < data_end ) // IMPORTANT: for validator post resize up
+                                {
+                                    memcpy( payload, hash, 32 );
+                                }
+                            }
+
                             return XDP_TX;
                         }
                     }
