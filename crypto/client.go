@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"strconv"
 	"context"
+	"crypto/rand"
 )
 
 func ParseAddress(input string) net.UDPAddr {
