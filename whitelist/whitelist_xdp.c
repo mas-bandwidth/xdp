@@ -1,7 +1,7 @@
 /*
     UDP whitelist XDP program
 
-    Reflects IPv4 UDP packets sent to port 40000 back to sender.
+    Drops IPv4 UDP packets sent to port 40000 from addresses that aren't in a whitelist.
 
     USAGE:
 
