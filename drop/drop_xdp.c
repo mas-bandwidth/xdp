@@ -1,7 +1,7 @@
 /*
     UDP drop XDP program
 
-    Reflects IPv4 UDP packets sent to port 40000 back to sender.
+    Drops IPv4 UDP packets sent to port 40000 that don't match a simple pattern.
 
     USAGE:
 
