@@ -1,7 +1,7 @@
 /*
     UDP crypto XDP program
 
-    Reflects IPv4 UDP packets sent to port 40000 back to sender.
+    Responds with the sha256 of the first 256 bytes of any packets received above 256 bytes in size.
 
     USAGE:
 
